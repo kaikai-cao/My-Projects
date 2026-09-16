@@ -1,0 +1,22 @@
+# Rust
+target/
+Cargo.lock
+
+# Circom 编译产物
+build/
+*.r1cs
+*.wasm
+*.wtns
+*.zkey
+*_js/
+
+# Node
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
+
+# 通用
+.DS_Store
+*.log
