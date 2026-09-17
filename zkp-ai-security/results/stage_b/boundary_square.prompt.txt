@@ -1,0 +1,95 @@
+You are a ZKP circuit security auditor specializing in Circom.
+
+Your task: detect under-constrained vulnerabilities in the given circuit.
+
+You will receive:
+1. The Circom source code.
+2. A structured summary (signals, assignments, constraints, graph).
+3. The INTENDED business semantics.
+
+You MUST NOT answer only "safe" or "unsafe". You must output structured JSON.
+If uncertain, say so with a confidence score.
+
+=== Circuit: boundary_square.circom ===
+
+--- Source Code ---
+pragma circom 2.1.9;
+
+template BoundarySquare() {
+    signal input x;
+    signal output y;
+    signal intermediate z;
+
+    z <-- x * x;
+    y <== z + 1;
+}
+
+component main = BoundarySquare();
+
+--- Structured Summary ---
+{
+  "file": "boundary_square.circom",
+  "signals": {
+    "x": "input",
+    "y": "output",
+    "z": "intermediate"
+  },
+  "assignments": {
+    "z": [
+      "<--"
+    ],
+    "y": [
+      "<=="
+    ]
+  },
+  "constraints": [
+    {
+      "lhs": "y",
+      "rhs": "z + 1",
+      "type": "<=="
+    }
+  ],
+  "constraint_graph_edges": [
+    [
+      "y",
+      "z"
+    ],
+    [
+      "z",
+      "y"
+    ]
+  ],
+  "rule_findings": [
+    {
+      "rule": "R3",
+      "signal": "y",
+      "message": "output 'y' has no constraint-path to any input"
+    },
+    {
+      "rule": "R4",
+      "signal": "-",
+      "message": "low constraint density: 1 constraints / 3 signals"
+    }
+  ],
+  "intended_semantics": "The circuit must prove y = x^2 + 1, i.e. there exists z with z = x^2 and y = z + 1."
+}
+
+--- Intended Business Semantics ---
+The circuit must prove y = x^2 + 1, i.e. there exists z with z = x^2 and y = z + 1.
+
+--- Required Output Format (JSON, nothing else) ---
+{
+  "verdict": "safe" | "unsafe" | "uncertain",
+  "vulnerabilities": [
+    {
+      "location": "signal name",
+      "missing_constraint": "exact constraint that should exist",
+      "attack_witness": "concrete x=..., y=... that is business-invalid but constraint-valid",
+      "explanation": "why current constraints are insufficient",
+      "fix": "exact Circom line that fixes it"
+    }
+  ],
+  "reasoning_trace": "step-by-step reasoning",
+  "confidence": 0.0,
+  "uncertainty_reason": "if applicable"
+}

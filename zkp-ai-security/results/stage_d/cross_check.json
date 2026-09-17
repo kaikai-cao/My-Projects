@@ -1,0 +1,77 @@
+[
+  {
+    "file": "boundary_square.circom",
+    "rule_verdict": "unsafe",
+    "rule_findings": [
+      {
+        "rule": "R3",
+        "signal": "y",
+        "message": "output 'y' has no constraint-path to any input"
+      },
+      {
+        "rule": "R4",
+        "signal": "-",
+        "message": "low constraint density: 1 constraints / 3 signals"
+      }
+    ],
+    "llm_verdict": "unsafe",
+    "llm_vulns": [
+      {
+        "location": "z",
+        "missing_constraint": "z === x * x",
+        "attack_witness": "x = 2, z = 0, y = 1",
+        "explanation": "The signal z is assigned using the witness-generation operator '<--' (z <-- x * x), which does not add any constraint to the R1CS. The only constraint in the circuit is y <== z + 1. Therefore, a malicious prover can choose any value for z independently of x, and then set y = z + 1. For example, with x = 2, the prover can set z = 0 and y = 1. This satisfies the constraint y = z + 1, but violates the intended semantics y = x^2 + 1 (since 1 != 2^2 + 1 = 5). The circuit does not enforce the relationship between x and z.",
+        "fix": "z <== x * x;"
+      }
+    ],
+    "llm_confidence": 1.0,
+    "agree": true
+  },
+  {
+    "file": "safe_square.circom",
+    "rule_verdict": "safe",
+    "rule_findings": [],
+    "llm_verdict": "safe",
+    "llm_vulns": [],
+    "llm_confidence": 1.0,
+    "agree": true
+  },
+  {
+    "file": "unsafe_square.circom",
+    "rule_verdict": "unsafe",
+    "rule_findings": [
+      {
+        "rule": "R1",
+        "signal": "y",
+        "message": "'y' assigned via <-- but never constrained"
+      },
+      {
+        "rule": "R2",
+        "signal": "y",
+        "message": "output 'y' never appears in any constraint"
+      },
+      {
+        "rule": "R3",
+        "signal": "y",
+        "message": "output 'y' has no constraint-path to any input"
+      },
+      {
+        "rule": "R4",
+        "signal": "-",
+        "message": "low constraint density: 0 constraints / 2 signals"
+      }
+    ],
+    "llm_verdict": "unsafe",
+    "llm_vulns": [
+      {
+        "location": "y",
+        "missing_constraint": "y === x * x;",
+        "attack_witness": "x=2, y=5",
+        "explanation": "The output y is assigned using the witness-generation operator <--, which computes y = x*x outside the constraint system. No constraint enforces this relation. Therefore, a malicious prover can choose any value for y regardless of x, and the proof will still satisfy all constraints (since there are none). The intended semantics y = x^2 is not enforced.",
+        "fix": "y <== x * x;"
+      }
+    ],
+    "llm_confidence": 1.0,
+    "agree": true
+  }
+]

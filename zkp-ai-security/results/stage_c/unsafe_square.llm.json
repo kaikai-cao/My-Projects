@@ -1,0 +1,15 @@
+{
+  "verdict": "unsafe",
+  "vulnerabilities": [
+    {
+      "location": "y",
+      "missing_constraint": "y === x * x;",
+      "attack_witness": "x=2, y=5",
+      "explanation": "The output y is assigned using the witness-generation operator <--, which computes y = x*x outside the constraint system. No constraint enforces this relation. Therefore, a malicious prover can choose any value for y regardless of x, and the proof will still satisfy all constraints (since there are none). The intended semantics y = x^2 is not enforced.",
+      "fix": "y <== x * x;"
+    }
+  ],
+  "reasoning_trace": "The circuit contains a single template UnsafeSquare with input x and output y. The assignment y <-- x * x; uses the <-- operator, which only assigns a value during witness generation but does not create any constraint. The structured summary confirms there are zero constraints and no constraint graph edges. The intended semantics require that y equals x squared. Without a constraint, any pair (x, y) can be used as a valid witness. For example, x=2, y=5 satisfies the (empty) constraint system but violates the intended semantics. Thus, the circuit is under-constrained and unsafe.",
+  "confidence": 1.0,
+  "uncertainty_reason": ""
+}

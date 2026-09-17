@@ -1,0 +1,38 @@
+{
+  "file": "unsafe_square.circom",
+  "source": "pragma circom 2.1.9;\n\ntemplate UnsafeSquare() {\n    signal input x;\n    signal output y;\n    y <-- x * x;\n}\n\ncomponent main = UnsafeSquare();",
+  "signals": {
+    "x": "input",
+    "y": "output"
+  },
+  "assignments": {
+    "y": [
+      "<--"
+    ]
+  },
+  "constraints": [],
+  "constraint_graph_edges": [],
+  "rule_findings": [
+    {
+      "rule": "R1",
+      "signal": "y",
+      "message": "'y' assigned via <-- but never constrained"
+    },
+    {
+      "rule": "R2",
+      "signal": "y",
+      "message": "output 'y' never appears in any constraint"
+    },
+    {
+      "rule": "R3",
+      "signal": "y",
+      "message": "output 'y' has no constraint-path to any input"
+    },
+    {
+      "rule": "R4",
+      "signal": "-",
+      "message": "low constraint density: 0 constraints / 2 signals"
+    }
+  ],
+  "intended_semantics": "The circuit must prove y = x^2. Any (x, y) with y != x^2 is business-invalid."
+}

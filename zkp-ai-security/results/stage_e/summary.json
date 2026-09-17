@@ -1,0 +1,7 @@
+{
+  "n_cases": 3,
+  "rule_accuracy": 1.0,
+  "llm_accuracy": 1.0,
+  "avg_llm_confidence": 1.0,
+  "disagreements": []
+}

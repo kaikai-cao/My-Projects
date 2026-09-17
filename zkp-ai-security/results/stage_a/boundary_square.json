@@ -1,0 +1,47 @@
+{
+  "file": "boundary_square.circom",
+  "source": "pragma circom 2.1.9;\n\ntemplate BoundarySquare() {\n    signal input x;\n    signal output y;\n    signal intermediate z;\n\n    z <-- x * x;\n    y <== z + 1;\n}\n\ncomponent main = BoundarySquare();",
+  "signals": {
+    "x": "input",
+    "y": "output",
+    "z": "intermediate"
+  },
+  "assignments": {
+    "z": [
+      "<--"
+    ],
+    "y": [
+      "<=="
+    ]
+  },
+  "constraints": [
+    {
+      "lhs": "y",
+      "rhs": "z + 1",
+      "type": "<=="
+    }
+  ],
+  "constraint_graph_edges": [
+    [
+      "y",
+      "z"
+    ],
+    [
+      "z",
+      "y"
+    ]
+  ],
+  "rule_findings": [
+    {
+      "rule": "R3",
+      "signal": "y",
+      "message": "output 'y' has no constraint-path to any input"
+    },
+    {
+      "rule": "R4",
+      "signal": "-",
+      "message": "low constraint density: 1 constraints / 3 signals"
+    }
+  ],
+  "intended_semantics": "The circuit must prove y = x^2 + 1, i.e. there exists z with z = x^2 and y = z + 1."
+}

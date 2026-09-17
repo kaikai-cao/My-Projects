@@ -1,0 +1,32 @@
+{
+  "file": "safe_square.circom",
+  "source": "pragma circom 2.1.9;\n\ntemplate SafeSquare() {\n    signal input x;\n    signal output y;\n    y <== x * x;\n}\n\ncomponent main = SafeSquare();",
+  "signals": {
+    "x": "input",
+    "y": "output"
+  },
+  "assignments": {
+    "y": [
+      "<=="
+    ]
+  },
+  "constraints": [
+    {
+      "lhs": "y",
+      "rhs": "x * x",
+      "type": "<=="
+    }
+  ],
+  "constraint_graph_edges": [
+    [
+      "y",
+      "x"
+    ],
+    [
+      "x",
+      "y"
+    ]
+  ],
+  "rule_findings": [],
+  "intended_semantics": "The circuit must prove y = x^2. Any (x, y) with y != x^2 is business-invalid."
+}

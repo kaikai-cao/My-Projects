@@ -1,0 +1,83 @@
+You are a ZKP circuit security auditor specializing in Circom.
+
+Your task: detect under-constrained vulnerabilities in the given circuit.
+
+You will receive:
+1. The Circom source code.
+2. A structured summary (signals, assignments, constraints, graph).
+3. The INTENDED business semantics.
+
+You MUST NOT answer only "safe" or "unsafe". You must output structured JSON.
+If uncertain, say so with a confidence score.
+
+=== Circuit: unsafe_square.circom ===
+
+--- Source Code ---
+pragma circom 2.1.9;
+
+template UnsafeSquare() {
+    signal input x;
+    signal output y;
+    y <-- x * x;
+}
+
+component main = UnsafeSquare();
+
+--- Structured Summary ---
+{
+  "file": "unsafe_square.circom",
+  "signals": {
+    "x": "input",
+    "y": "output"
+  },
+  "assignments": {
+    "y": [
+      "<--"
+    ]
+  },
+  "constraints": [],
+  "constraint_graph_edges": [],
+  "rule_findings": [
+    {
+      "rule": "R1",
+      "signal": "y",
+      "message": "'y' assigned via <-- but never constrained"
+    },
+    {
+      "rule": "R2",
+      "signal": "y",
+      "message": "output 'y' never appears in any constraint"
+    },
+    {
+      "rule": "R3",
+      "signal": "y",
+      "message": "output 'y' has no constraint-path to any input"
+    },
+    {
+      "rule": "R4",
+      "signal": "-",
+      "message": "low constraint density: 0 constraints / 2 signals"
+    }
+  ],
+  "intended_semantics": "The circuit must prove y = x^2. Any (x, y) with y != x^2 is business-invalid."
+}
+
+--- Intended Business Semantics ---
+The circuit must prove y = x^2. Any (x, y) with y != x^2 is business-invalid.
+
+--- Required Output Format (JSON, nothing else) ---
+{
+  "verdict": "safe" | "unsafe" | "uncertain",
+  "vulnerabilities": [
+    {
+      "location": "signal name",
+      "missing_constraint": "exact constraint that should exist",
+      "attack_witness": "concrete x=..., y=... that is business-invalid but constraint-valid",
+      "explanation": "why current constraints are insufficient",
+      "fix": "exact Circom line that fixes it"
+    }
+  ],
+  "reasoning_trace": "step-by-step reasoning",
+  "confidence": 0.0,
+  "uncertainty_reason": "if applicable"
+}

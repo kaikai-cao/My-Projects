@@ -18,6 +18,33 @@ Cargo.lock
 __pycache__/
 *.pyc
 
+# Python 虚拟环境
+.venv/
+venv/
+env/
+
+# Python 包管理
+*.egg-info/
+dist/
+
+# VS Code
+.vscode/
+.idea/
+
+# 测试覆盖率
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Circom 编译中间文件
+*.sym
+*.json.gz
+
 # 通用
 .DS_Store
 *.log
+
+.env
