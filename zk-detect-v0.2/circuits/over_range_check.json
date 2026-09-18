@@ -1,0 +1,20 @@
+{
+  "circuit_id": "over_range_check",
+  "description": "Over-constrained: adds x0 === 1 which rejects valid x=0,2",
+  "inputs": ["x"],
+  "public_inputs": [],
+  "outputs": ["y"],
+  "internals": ["x0", "x1"],
+  "assignments": {
+    "x0": "x & 1",
+    "x1": "x >> 1",
+    "y": "x*x"
+  },
+  "constraints": [
+    "x0*(x0-1) === 0",
+    "x1*(x1-1) === 0",
+    "x === x0 + 2*x1",
+    "x0 === 1",
+    "y === x*x"
+  ]
+}

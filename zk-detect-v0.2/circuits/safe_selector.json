@@ -1,0 +1,15 @@
+{
+  "circuit_id": "safe_selector",
+  "description": "Correct selector with boolean constraint on sel",
+  "inputs": ["sel", "a", "b"],
+  "public_inputs": [],
+  "outputs": ["out"],
+  "internals": [],
+  "assignments": {
+    "out": "sel*a + (1-sel)*b"
+  },
+  "constraints": [
+    "sel*(sel-1) === 0",
+    "out === sel*a + (1-sel)*b"
+  ]
+}

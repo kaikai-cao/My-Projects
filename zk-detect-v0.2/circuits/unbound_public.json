@@ -1,0 +1,14 @@
+{
+  "circuit_id": "unbound_public",
+  "description": "Public input not bound by any constraint",
+  "inputs": ["x"],
+  "public_inputs": ["claimed_sum"],
+  "outputs": ["y"],
+  "internals": [],
+  "assignments": {
+    "y": "x*x"
+  },
+  "constraints": [
+    "y === x*x"
+  ]
+}

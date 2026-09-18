@@ -1,0 +1,14 @@
+{
+  "circuit_id": "under_selector",
+  "description": "Under-constrained: missing boolean constraint on sel",
+  "inputs": ["sel", "a", "b"],
+  "public_inputs": [],
+  "outputs": ["out"],
+  "internals": [],
+  "assignments": {
+    "out": "sel*a + (1-sel)*b"
+  },
+  "constraints": [
+    "out === sel*a + (1-sel)*b"
+  ]
+}

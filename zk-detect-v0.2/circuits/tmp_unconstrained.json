@@ -1,0 +1,15 @@
+{
+  "circuit_id": "tmp_unconstrained",
+  "description": "Internal variable tmp is assigned but not bound by any constraint",
+  "inputs": ["a", "b", "c"],
+  "public_inputs": [],
+  "outputs": ["out"],
+  "internals": ["tmp"],
+  "assignments": {
+    "tmp": "a*b",
+    "out": "tmp + c"
+  },
+  "constraints": [
+    "out === tmp + c"
+  ]
+}

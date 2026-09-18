@@ -1,0 +1,52 @@
+================================================================================
+Circuit: over_range_check
+Description: Over-constrained: adds x0 === 1 which rejects valid x=0,2
+================================================================================
+Rule  Risk Var        Severity   Evidence
+--------------------------------------------------------------------------------
+R5    y               info       constraint "y === x*x" is the only constraint binding "y"; removing it would unbind a critical variable
+
+================================================================================
+Circuit: safe_selector
+Description: Correct selector with boolean constraint on sel
+================================================================================
+Rule  Risk Var        Severity   Evidence
+--------------------------------------------------------------------------------
+R5    out             info       constraint "out === sel*a + (1-sel)*b" is the only constraint binding "out"; removing it would unbind a critical variable
+
+================================================================================
+Circuit: tmp_unconstrained
+Description: Internal variable tmp is assigned but not bound by any constraint
+================================================================================
+Rule  Risk Var        Severity   Evidence
+--------------------------------------------------------------------------------
+R2    tmp             high       variable "tmp" is computed in "a*b" but its assignment relation is not bound by any constraint
+R5    out             info       constraint "out === tmp + c" is the only constraint binding "out"; removing it would unbind a critical variable
+
+================================================================================
+Circuit: unbound_public
+Description: Public input not bound by any constraint
+================================================================================
+Rule  Risk Var        Severity   Evidence
+--------------------------------------------------------------------------------
+R4    claimed_sum     critical   public input "claimed_sum" does not appear in any constraint
+R5    y               info       constraint "y === x*x" is the only constraint binding "y"; removing it would unbind a critical variable
+
+================================================================================
+Circuit: under_selector
+Description: Under-constrained: missing boolean constraint on sel
+================================================================================
+Rule  Risk Var        Severity   Evidence
+--------------------------------------------------------------------------------
+R1    sel             high       "sel" used as selector in "sel*a + (1-sel)*b" but no boolean constraint found
+R5    out             info       constraint "out === sel*a + (1-sel)*b" is the only constraint binding "out"; removing it would unbind a critical variable
+
+================================================================================
+SUMMARY
+================================================================================
+Total circuits: 5
+Total findings: 8
+  R1: 1
+  R2: 1
+  R4: 1
+  R5: 5
