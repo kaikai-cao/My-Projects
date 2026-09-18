@@ -236,12 +236,12 @@ def format_report(circuit: dict, findings: List[Finding]) -> str:
 
 # ---------- 主程序 ----------
 def main():
-    circuits_dir = Path("circuits")
+    circuits_dir = Path(__file__).parent.parent / "circuits"
     if not circuits_dir.exists():
         print("ERROR: circuits/ directory not found.")
         sys.exit(1)
 
-    json_files = sorted(circuits_dir.glob("*.json"))
+    json_files = sorted(circuits_dir.rglob("*.json"))
     if not json_files:
         print("ERROR: no JSON files found in circuits/.")
         sys.exit(1)
@@ -281,3 +281,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+    # evaluate.py

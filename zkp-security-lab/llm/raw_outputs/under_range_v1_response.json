@@ -1,0 +1,9 @@
+{
+  "vulnerability_type": "under-constrained",
+  "variable": "x",
+  "missing_or_extra_constraint": "There is no constraint restricting x to a specific range or set of allowed values; the circuit only enforces y = x^2, so any field element x is accepted.",
+  "evidence": "The template defines only one constraint: y <== x * x. Since x is a free input signal with no range check, inequality constraints, or other restrictions, the prover can choose any field element for x. This means the circuit does not enforce any intended property such as x being within a range (e.g., 0 <= x < 2^n), despite the template name 'UnderRange' suggesting a range check was intended.",
+  "attack_input": "x = 21888242871839275222246405745257275088548364400416034343698204186575808495616 (i.e., -1 mod p for the BN254 scalar field), y = 1",
+  "fix_suggestion": "Add explicit range constraints for x, e.g., using Num2Bits or LessThan components to enforce 0 <= x < 2^n, or otherwise constrain x to the intended domain. For example: component n2b = Num2Bits(64); n2b.in <== x; and then assert the desired range.",
+  "confidence": "high"
+}

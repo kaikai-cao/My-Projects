@@ -1,0 +1,9 @@
+{
+  "vulnerability_type": "none",
+  "variable": "dead",
+  "missing_or_extra_constraint": "The signal 'dead' is assigned via '<--' (x + 1) but is never constrained and never used in any constraint or output. It is a dead/unused signal, not a security-relevant under-constrained variable.",
+  "evidence": "Structured summary shows assignments = {'dead': 'x + 1', 'y': 'x*x'} and constraints = ['y === x*x']. 'dead' appears in assignments but not in constraints, and it is not an output or public input. The only output 'y' is fully constrained by 'y === x*x', which correctly binds y to x. No selector patterns, no public inputs, and no output that fails to depend on inputs.",
+  "attack_input": "N/A - no exploitable under-constrained signal affects any output or public input. For any x, y is uniquely determined as x*x.",
+  "fix_suggestion": "Remove the unused 'dead' signal and its assignment to eliminate dead code and avoid confusion. If 'dead' were intended to be used, replace 'dead <-- x + 1;' with 'dead <== x + 1;' and add a constraint linking it to the circuit's logic.",
+  "confidence": "high"
+}

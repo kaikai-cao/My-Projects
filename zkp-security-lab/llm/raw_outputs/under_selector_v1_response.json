@@ -1,0 +1,9 @@
+{
+  "vulnerability_type": "under-constrained",
+  "variable": "sel",
+  "missing_or_extra_constraint": "Missing boolean constraint on `sel` (sel must be 0 or 1).",
+  "evidence": "The circuit computes `out = sel * a + (1 - sel) * b` but never constrains `sel` to be binary. In Circom, signals are field elements, so `sel` can be any value in the field. For example, `sel = 2` yields `out = 2a - b`, which is not a valid selector behavior. A malicious prover can choose arbitrary `sel` values to produce outputs that satisfy the equation without respecting the intended selection semantics.",
+  "attack_input": "sel = 2, a = 1, b = 0 => out = 2*1 + (1-2)*0 = 2 (instead of only a or b)",
+  "fix_suggestion": "Add a boolean constraint on `sel`, e.g., `sel * (sel - 1) === 0;` or use `sel <== 1 - (1 - sel)` with proper constraints. Alternatively, use `sel` as a binary input via `signal input sel; sel * (sel - 1) === 0;`.",
+  "confidence": "high"
+}

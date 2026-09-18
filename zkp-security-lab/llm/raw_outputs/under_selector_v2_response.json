@@ -1,0 +1,9 @@
+{
+  "vulnerability_type": "under-constrained",
+  "variable": "sel",
+  "missing_or_extra_constraint": "Missing boolean constraint on the selector signal `sel`. The circuit uses `sel` as a multiplexer selector in `out <== sel * a + (1 - sel) * b`, but never constrains `sel` to be 0 or 1. In Circom, signals are field elements, so `sel` can take any value in the field (e.g., 2, 3, or a large prime-field element), allowing the prover to produce outputs that do not correspond to a valid binary selection between `a` and `b`.",
+  "evidence": "Structured summary lists `sel` under 'Potential selector patterns' and shows the only constraint is `out === sel*a + (1-sel)*b`. There is no constraint such as `sel * (sel - 1) === 0`. The 'Variables with assignments but NOT bound by constraints' list is empty, but the selector itself is not constrained to a boolean domain, which is the classic under-constrained selector vulnerability.",
+  "attack_input": "sel = 2, a = 1, b = 0  =>  out = 2*1 + (1-2)*0 = 2. A malicious prover can claim out = 2 even though a valid selector should only yield a or b (0 or 1).",
+  "fix_suggestion": "Add a boolean constraint on the selector, e.g. `sel * (sel - 1) === 0;` (or use `sel <== 1 - sel_b` style with a dedicated boolean signal). This forces `sel` to be 0 or 1, ensuring `out` is a genuine multiplexer output between `a` and `b`.",
+  "confidence": "high"
+}

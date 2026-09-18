@@ -1,0 +1,10 @@
+{
+  "circuit_id": "ambiguous_domain",
+  "description": "Public input bound but business semantics unclear",
+  "inputs": ["x"],
+  "public_inputs": ["bound"],
+  "outputs": ["y"],
+  "internals": [],
+  "assignments": {"y": "x*x + bound"},
+  "constraints": ["y === x*x + bound"]
+}

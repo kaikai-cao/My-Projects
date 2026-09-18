@@ -1,0 +1,9 @@
+{
+  "vulnerability_type": "under-constrained",
+  "variable": "dead",
+  "missing_or_extra_constraint": "The signal `dead` is assigned using the assignment operator `<--` (witness assignment) but is never constrained by any constraint equation. This means the prover can choose any value for `dead` independently of `x`, and the circuit will still be satisfied.",
+  "evidence": "In Circom, `<--` only assigns a value to the witness without adding a constraint. The signal `dead` is not used in any other constraint (e.g., no `===` or `<==` involving `dead`). Therefore, the value of `dead` is completely unconstrained. A malicious prover can set `dead` to any arbitrary value (e.g., 0, 42, or a value inconsistent with `x + 1`) and still generate a valid proof. This is a classic under-constrained bug.",
+  "attack_input": "x = 5, dead = 999 (instead of the intended 6). The circuit will accept this because `y = 25` is correctly constrained, but `dead` is free.",
+  "fix_suggestion": "Either remove the unused signal `dead` entirely, or constrain it properly using `<==` (e.g., `dead <== x + 1;`) if it is intended to be part of the circuit's logic. If `dead` is truly meant to be a dead variable, it should be eliminated to avoid confusion and potential security issues.",
+  "confidence": "high"
+}

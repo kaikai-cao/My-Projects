@@ -1,0 +1,10 @@
+{
+  "circuit_id": "under_range",
+  "description": "Missing range check: x not bounded to 2 bits",
+  "inputs": ["x"],
+  "public_inputs": [],
+  "outputs": ["y"],
+  "internals": [],
+  "assignments": {"y": "x*x"},
+  "constraints": ["y === x*x"]
+}

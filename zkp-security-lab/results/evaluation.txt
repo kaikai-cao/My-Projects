@@ -1,0 +1,26 @@
+====================================================================================================
+Circuit                Truth        Rule         LLM-v1       LLM-v2      
+----------------------------------------------------------------------------------------------------
+safe_selector          safe         safe         safe         safe        
+safe_range_check       safe         safe         error        vulnerable  
+safe_public_binding    safe         safe         safe         safe        
+under_selector         vulnerable   vulnerable   vulnerable   vulnerable  
+tmp_unconstrained      vulnerable   vulnerable   vulnerable   vulnerable  
+under_range            vulnerable   safe         vulnerable   safe        
+unbound_public         vulnerable   vulnerable   vulnerable   vulnerable  
+over_range_check       vulnerable   safe         vulnerable   vulnerable  
+over_equality          vulnerable   safe         vulnerable   vulnerable  
+ambiguous_dead_var     safe         vulnerable   vulnerable   safe        
+ambiguous_domain       safe         safe         vulnerable   safe        
+
+--- Rule ---
+  TP=3  FP=1  FN=3  TN=4
+  Precision=0.750  Recall=0.500  F1=0.600
+
+--- LLM-v1 ---
+  TP=6  FP=2  FN=0  TN=2
+  Precision=0.750  Recall=1.000  F1=0.857
+
+--- LLM-v2 ---
+  TP=5  FP=1  FN=1  TN=4
+  Precision=0.833  Recall=0.833  F1=0.833

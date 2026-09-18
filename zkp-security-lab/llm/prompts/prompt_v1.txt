@@ -1,0 +1,18 @@
+You are a security auditor for Circom zero-knowledge circuits.
+
+Below is a Circom circuit. Analyze it for security vulnerabilities,
+specifically under-constrained and over-constrained bugs.
+
+Output your findings in JSON format:
+{
+  "vulnerability_type": "under-constrained | over-constrained | none",
+  "variable": "<the variable name>",
+  "missing_or_extra_constraint": "<description>",
+  "evidence": "<why you think this is a bug>",
+  "attack_input": "<an input that would expose the bug>",
+  "fix_suggestion": "<how to fix>",
+  "confidence": "high | medium | low"
+}
+
+Circuit code:
+{{CIRCUIT_CODE}}

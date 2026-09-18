@@ -1,0 +1,9 @@
+{
+  "vulnerability_type": "none",
+  "variable": "claimed",
+  "missing_or_extra_constraint": "No missing or extra constraint; claimed is correctly constrained to equal computed, and computed is correctly constrained to x*x.",
+  "evidence": "The circuit computes computed <== x * x, which both assigns and constrains computed to x squared. Then claimed === computed adds an explicit equality constraint between the public input claimed and computed. Therefore, for any valid witness, claimed must equal x^2. There is no unconstrained signal or missing constraint.",
+  "attack_input": "N/A",
+  "fix_suggestion": "No fix needed.",
+  "confidence": "high"
+}

@@ -1,0 +1,9 @@
+{
+  "vulnerability_type": "under-constrained",
+  "variable": "tmp",
+  "missing_or_extra_constraint": "Missing constraint binding tmp to a*b. The assignment `tmp <-- a * b;` uses the witness-generation operator `<--` instead of the constraint operator `<==`, so tmp is not constrained by the circuit. Only `out === tmp + c` is enforced, meaning a malicious prover can choose any value for tmp (and thus out) regardless of a and b.",
+  "evidence": "Structured summary lists 'tmp' under 'Variables with assignments but NOT bound by constraints' and 'tmp' appears in constraints only via 'out === tmp + c'. The assignment map shows tmp: 'a*b' but the constraint set does not include 'tmp === a*b'. The circuit uses `tmp <-- a * b;` (witness assignment) rather than `tmp <== a * b;` (constrained assignment).",
+  "attack_input": "a = 2, b = 3, c = 0, tmp = 999, out = 999. The prover can set tmp to any value (e.g., 999) and out = tmp + c = 999, satisfying the only constraint `out === tmp + c` while violating the intended relation out = a*b + c = 6.",
+  "fix_suggestion": "Replace `tmp <-- a * b;` with `tmp <== a * b;` (or add an explicit constraint `tmp === a * b;`) so that tmp is bound to the product of a and b, ensuring out = a*b + c is enforced.",
+  "confidence": "high"
+}

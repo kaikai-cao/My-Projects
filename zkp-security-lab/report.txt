@@ -1,6 +1,45 @@
 ================================================================================
+Circuit: ambiguous_dead_var
+Description: Variable computed but never used in output or constraints
+================================================================================
+Rule  Risk Var        Severity   Evidence
+--------------------------------------------------------------------------------
+R2    dead            high       variable "dead" is computed in "x + 1" but its assignment relation is not bound by any constraint
+R5    y               info       constraint "y === x*x" is the only constraint binding "y"; removing it would unbind a critical variable
+
+================================================================================
+Circuit: ambiguous_domain
+Description: Public input bound but business semantics unclear
+================================================================================
+Rule  Risk Var        Severity   Evidence
+--------------------------------------------------------------------------------
+R5    y               info       constraint "y === x*x + bound" is the only constraint binding "y"; removing it would unbind a critical variable
+
+================================================================================
+Circuit: over_equality
+Description: Over-constrained: >= implemented as ==, rejects a+b>c
+================================================================================
+No findings.
+
+================================================================================
 Circuit: over_range_check
 Description: Over-constrained: adds x0 === 1 which rejects valid x=0,2
+================================================================================
+Rule  Risk Var        Severity   Evidence
+--------------------------------------------------------------------------------
+R5    y               info       constraint "y === x*x" is the only constraint binding "y"; removing it would unbind a critical variable
+
+================================================================================
+Circuit: safe_public_binding
+Description: Public input correctly bound to computation
+================================================================================
+Rule  Risk Var        Severity   Evidence
+--------------------------------------------------------------------------------
+R5    claimed         info       constraint "claimed === computed" is the only constraint binding "claimed"; removing it would unbind a critical variable
+
+================================================================================
+Circuit: safe_range_check
+Description: Correct range check: x bound to 2 bits
 ================================================================================
 Rule  Risk Var        Severity   Evidence
 --------------------------------------------------------------------------------
@@ -33,6 +72,14 @@ R4    claimed_sum     critical   public input "claimed_sum" does not appear in a
 R5    y               info       constraint "y === x*x" is the only constraint binding "y"; removing it would unbind a critical variable
 
 ================================================================================
+Circuit: under_range
+Description: Missing range check: x not bounded to 2 bits
+================================================================================
+Rule  Risk Var        Severity   Evidence
+--------------------------------------------------------------------------------
+R5    y               info       constraint "y === x*x" is the only constraint binding "y"; removing it would unbind a critical variable
+
+================================================================================
 Circuit: under_selector
 Description: Under-constrained: missing boolean constraint on sel
 ================================================================================
@@ -44,9 +91,9 @@ R5    out             info       constraint "out === sel*a + (1-sel)*b" is the o
 ================================================================================
 SUMMARY
 ================================================================================
-Total circuits: 5
-Total findings: 8
+Total circuits: 11
+Total findings: 14
   R1: 1
-  R2: 1
+  R2: 2
   R4: 1
-  R5: 5
+  R5: 10

@@ -1,0 +1,9 @@
+{
+  "vulnerability_type": "over-constrained",
+  "variable": "result",
+  "missing_or_extra_constraint": "The constraint `result === 0` is redundant and over-constrains the circuit. Since `result <== a + b - c` already fully determines `result`, the additional constraint `result === 0` forces `a + b - c === 0` for every valid witness, effectively turning the circuit into an equality checker rather than a general arithmetic relation. This is not a soundness bug per se, but it is a semantic over-constraint that makes the circuit reject all inputs where `a + b != c`.",
+  "evidence": "Structured summary shows assignments: {'result': 'a + b - c'} and constraints: ['result === a + b - c', 'result === 0']. The second constraint is not needed to bind `result` (it is already bound by the first), and it imposes an extra restriction on the inputs a, b, c. No variables appear in assignments without constraints, so there is no under-constrained signal.",
+  "attack_input": "a = 1, b = 1, c = 1 (result = 1, but constraint result === 0 fails, so the witness is rejected). Conversely, any input satisfying a + b = c is accepted, which may not match intended business logic if the circuit was meant to output a + b - c.",
+  "fix_suggestion": "Remove the redundant `result === 0;` constraint if the intent is to output `a + b - c`. If the intent is to prove `a + b == c`, then remove the `result` signal and the assignment, and instead use a single constraint `a + b === c;` (or keep `result` but only constrain `result === a + b - c` and let the caller check `result === 0`).",
+  "confidence": "high"
+}

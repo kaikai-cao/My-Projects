@@ -1,0 +1,9 @@
+{
+  "vulnerability_type": "under-constrained",
+  "variable": "claimed_sum",
+  "missing_or_extra_constraint": "The public input `claimed_sum` is declared but never used in any assignment or constraint. It is completely unbound, so a prover can supply any value for `claimed_sum` without affecting the validity of the proof.",
+  "evidence": "Structured summary lists `claimed_sum` under Public Inputs, but it does not appear in `Assignments` ({'y': 'x*x'}), `Constraints` (['y === x*x']), or `Variables appearing in constraints` (['x', 'y']). The circuit body only contains `y <== x * x;`, with no reference to `claimed_sum`.",
+  "attack_input": "x = 3, claimed_sum = 999999 (or any arbitrary value). The proof will still verify because `claimed_sum` is never constrained, allowing a malicious prover to assert a false public value.",
+  "fix_suggestion": "Either remove the unused `claimed_sum` input, or bind it to the computation, e.g. add `claimed_sum === x * x;` (or `claimed_sum === y;`) so the public input is constrained to the intended value.",
+  "confidence": "high"
+}

@@ -1,0 +1,14 @@
+@"
+circuit_id,category,ground_truth
+safe_selector,safe,safe
+safe_range_check,safe,safe
+safe_public_binding,safe,safe
+under_selector,under_constrained,vulnerable
+tmp_unconstrained,under_constrained,vulnerable
+under_range,under_constrained,vulnerable
+unbound_public,under_constrained,vulnerable
+over_range_check,over_constrained,vulnerable
+over_equality,over_constrained,vulnerable
+ambiguous_dead_var,edge_case,safe
+ambiguous_domain,edge_case,safe
+"@ | Out-File -Encoding utf8 results\ground_truth.csv

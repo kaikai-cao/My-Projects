@@ -1,0 +1,13 @@
+{
+  "circuit_id": "safe_public_binding",
+  "description": "Public input correctly bound to computation",
+  "inputs": ["x"],
+  "public_inputs": ["claimed"],
+  "outputs": [],
+  "internals": ["computed"],
+  "assignments": {"computed": "x*x"},
+  "constraints": [
+    "computed === x*x",
+    "claimed === computed"
+  ]
+}

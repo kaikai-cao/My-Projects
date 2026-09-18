@@ -1,0 +1,9 @@
+{
+  "vulnerability_type": "over-constrained",
+  "variable": "x0",
+  "missing_or_extra_constraint": "The constraint `x0 === 1` forces x0 to be exactly 1, which combined with `x === x0 + 2*x1` and the boolean constraints on x0 and x1 forces x to be odd (x = 1 + 2*x1). This makes the circuit reject all even inputs, which is stronger than the apparent business semantics of a generic 'over-range check' that should accept any x representable in 2 bits (0..3).",
+  "evidence": "Structured summary lists constraints: ['x0*(x0-1) === 0', 'x1*(x1-1) === 0', 'x === x0 + 2*x1', 'x0 === 1', 'y === x*x']. The extra constraint `x0 === 1` is not implied by the boolean/bit-decomposition constraints and arbitrarily pins the least-significant bit to 1. Assignments show x0 = x & 1, so this constraint effectively requires x to be odd.",
+  "attack_input": "x = 2 (or any even value, e.g., x = 0, 4, 6). The witness x0 = 0, x1 = 1 satisfies all bit-decomposition constraints but fails `x0 === 1`, so the proof cannot be generated for legitimate even inputs.",
+  "fix_suggestion": "Remove the constraint `x0 === 1;` unless the intended semantics is specifically 'x must be odd'. If the goal is a 2-bit range check, keep only the boolean constraints on x0 and x1 plus the reconstruction `x === x0 + 2*x1` (and optionally add `x1 === 0` if the range should be 0..1).",
+  "confidence": "high"
+}

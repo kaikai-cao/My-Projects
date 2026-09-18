@@ -1,0 +1,9 @@
+{
+  "vulnerability_type": "under-constrained",
+  "variable": "tmp",
+  "missing_or_extra_constraint": "Missing constraint that enforces tmp == a * b. The signal tmp is assigned using the witness-generation operator <--, which does not add any constraint to the R1CS. Only out is constrained (out === tmp + c), so tmp can be any value chosen by the prover.",
+  "evidence": "In Circom, <-- assigns a value during witness generation but does not constrain it. Since tmp is only used in out <== tmp + c, the circuit does not enforce tmp = a * b. A malicious prover can pick an arbitrary tmp (e.g., 0) and set out = c, regardless of a and b, while still producing a valid proof. The intended relation out = a*b + c is therefore not enforced.",
+  "attack_input": "a = 2, b = 3, c = 5, tmp = 0 (instead of 6). Then out = 0 + 5 = 5, but the honest computation would give out = 2*3 + 5 = 11. The proof verifies because no constraint links tmp to a*b.",
+  "fix_suggestion": "Replace the assignment with a constrained multiplication: tmp <== a * b; (or add the constraint tmp === a * b; after the <-- assignment). This enforces the intended relation and prevents arbitrary tmp values.",
+  "confidence": "high"
+}

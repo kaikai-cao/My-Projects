@@ -1,0 +1,9 @@
+{
+  "vulnerability_type": "none",
+  "variable": "",
+  "missing_or_extra_constraint": "",
+  "evidence": "The structured summary shows that every signal is properly constrained: 'computed' has an assignment (x*x) and is bound by the constraint 'computed === x*x'; the public input 'claimed' is bound by 'claimed === computed'. The set 'Variables with assignments but NOT bound by constraints' is empty, and there are no selector patterns. Thus there is no under-constrained signal, no unbound public input, and no over-constrained relation beyond the intended quadratic binding.",
+  "attack_input": "",
+  "fix_suggestion": "",
+  "confidence": "high"
+}

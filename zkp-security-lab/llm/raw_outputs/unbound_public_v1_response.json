@@ -1,0 +1,9 @@
+{
+  "vulnerability_type": "under-constrained",
+  "variable": "claimed_sum",
+  "missing_or_extra_constraint": "The input signal `claimed_sum` is declared but never constrained or used in any constraint. It is a free input that can be arbitrarily chosen by the prover without affecting the circuit's satisfiability.",
+  "evidence": "In the template `UnboundPublic`, `claimed_sum` is declared as `signal input claimed_sum;` but there is no constraint linking it to `x`, `y`, or any other signal. The only constraint is `y <== x * x;`. Therefore, for any valid assignment of `x` and `y`, `claimed_sum` can be set to any value, and the circuit will still be satisfied. This means the proof does not enforce any relationship involving `claimed_sum`, allowing a malicious prover to supply an arbitrary value for it.",
+  "attack_input": "x = 3, claimed_sum = 999999, y will be 9. The circuit accepts this even though claimed_sum is arbitrary.",
+  "fix_suggestion": "Either remove the unused `claimed_sum` input if it is not needed, or add appropriate constraints that bind `claimed_sum` to the intended computation (e.g., `claimed_sum === x + y;` or similar).",
+  "confidence": "high"
+}

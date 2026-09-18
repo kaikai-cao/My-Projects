@@ -1,0 +1,9 @@
+{
+  "vulnerability_type": "under-constrained",
+  "variable": "bound",
+  "missing_or_extra_constraint": "The input `bound` is used in the output computation but is not constrained in any way. It can be any field element, allowing the prover to choose arbitrary values for `bound` to produce any desired output `y` for a given `x`.",
+  "evidence": "The circuit computes `y = x*x + bound` with no constraints on `bound`. Since `bound` is a free input, the prover can set it to any value, making the output `y` completely malleable. For example, for a fixed `x`, the prover can set `bound = desired_y - x*x` to achieve any `y`. This breaks the intended relation if `bound` was supposed to be a fixed public parameter or constrained to a specific value.",
+  "attack_input": "x = 2, bound = 1000 (or any arbitrary value). The output y = 4 + 1000 = 1004, which may not be the intended result if bound was supposed to be, e.g., a constant like 5.",
+  "fix_suggestion": "If `bound` is meant to be a constant, replace it with a hardcoded constant or add a constraint such as `bound === <expected_value>`. If `bound` is a public input that should be fixed per proof, make it a public signal and ensure it is properly constrained in the larger system. Alternatively, if `bound` is meant to be derived from other signals, add the necessary constraints to enforce that relationship.",
+  "confidence": "high"
+}

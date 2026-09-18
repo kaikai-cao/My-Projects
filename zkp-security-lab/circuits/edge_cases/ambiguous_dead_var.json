@@ -1,0 +1,10 @@
+{
+  "circuit_id": "ambiguous_dead_var",
+  "description": "Variable computed but never used in output or constraints",
+  "inputs": ["x"],
+  "public_inputs": [],
+  "outputs": ["y"],
+  "internals": ["dead"],
+  "assignments": {"dead": "x + 1", "y": "x*x"},
+  "constraints": ["y === x*x"]
+}

@@ -1,0 +1,9 @@
+{
+  "vulnerability_type": "over-constrained",
+  "variable": "result",
+  "missing_or_extra_constraint": "The constraint `result === 0` is redundant and over-constrains the circuit because `result` is already defined by `result <== a + b - c`. This forces `a + b - c = 0` in addition to the assignment, which may not be intended if the circuit is meant to compute `result` freely.",
+  "evidence": "The signal `result` is assigned the value `a + b - c` using `<==`, which both assigns and constrains `result` to equal that expression. The subsequent `result === 0` adds an additional constraint that `result` must be zero. This means the circuit only accepts inputs where `a + b - c = 0`. If the intent was to output `result = a + b - c` without restricting it to zero, this is an over-constraint bug. The circuit name 'OverEquality' hints at this issue.",
+  "attack_input": "Any input where a + b - c != 0, e.g., a=1, b=1, c=0. The circuit will reject it even though it could compute result=2.",
+  "fix_suggestion": "Remove the redundant constraint `result === 0` if the goal is to compute `result = a + b - c`. If the goal is to enforce `a + b = c`, then remove the `result` signal and directly constrain `a + b === c`.",
+  "confidence": "high"
+}

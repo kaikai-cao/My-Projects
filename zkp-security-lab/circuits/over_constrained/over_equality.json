@@ -1,0 +1,13 @@
+{
+  "circuit_id": "over_equality",
+  "description": "Over-constrained: >= implemented as ==, rejects a+b>c",
+  "inputs": ["a", "b", "c"],
+  "public_inputs": [],
+  "outputs": ["result"],
+  "internals": [],
+  "assignments": {"result": "a + b - c"},
+  "constraints": [
+    "result === a + b - c",
+    "result === 0"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "circuit_id": "safe_range_check",
+  "description": "Correct range check: x bound to 2 bits",
+  "inputs": ["x"],
+  "public_inputs": [],
+  "outputs": ["y"],
+  "internals": ["b0", "b1"],
+  "assignments": {"y": "x*x"},
+  "constraints": [
+    "b0*(b0-1) === 0",
+    "b1*(b1-1) === 0",
+    "x === b0 + 2*b1",
+    "y === x*x"
+  ]
+}
